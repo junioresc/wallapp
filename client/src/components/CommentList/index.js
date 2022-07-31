@@ -12,7 +12,7 @@ const CommentList = ({ comments }) => {
                     <p key={comment._id}>
                         {comment.commentBody} {'// '}
                         <Link to={`/profile/${comment.username}`}>
-                            {comment.username} on comment.createdAt
+                        <Card.Footer className="text-muted">{comment.username} on {comment.createdAt}</Card.Footer>    
                         </Link>
                     </p>
                 ))}
