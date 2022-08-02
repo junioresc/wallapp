@@ -21,8 +21,8 @@ const PostForm = () => {
                     query: QUERY_POSTS,
                     data: { posts: [addPost, ...posts] }
                 });
-            } catch (e) {
-                console.error(e);
+            } catch (error) {
+                console.error(error);
                 setShowAlert(true);
             }
 
@@ -57,8 +57,8 @@ const PostForm = () => {
 
             setPostText('');
             setCharacterCount(0);
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
             setShowAlert(true)
         }
     };
