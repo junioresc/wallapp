@@ -63,6 +63,7 @@ export const QUERY_ME = gql`
             _id
             username
             email
+            confirmed
             friendCount
             friends {
                 _id
@@ -90,6 +91,7 @@ export const QUERY_ME_BASIC = gql`
             _id
             username
             email
+            confirmed
             friendCount
             friends {
                 _id
