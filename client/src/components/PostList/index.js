@@ -8,7 +8,7 @@ const PostList = ({ posts, title }) => {
     }
 
     return(
-        <div>
+        <>
             <h3>{title}</h3>
             {posts &&
             posts.map(post => (
@@ -31,7 +31,7 @@ const PostList = ({ posts, title }) => {
                     </Card.Body>
                 </Card>
             ))}
-        </div>
+        </>
     );
 };
 

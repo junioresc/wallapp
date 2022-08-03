@@ -12,7 +12,7 @@ const PostForm = () => {
     const [validated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
-    const [addPost, { error }] = useMutation(ADD_POST, {
+    const [addPost] = useMutation(ADD_POST, {
         update(cache, { data: {addPost } }) {
             try {
                 const { posts } = cache.readQuery({ query: QUERY_POSTS});
