@@ -1,8 +1,7 @@
 const { User, Post } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
-const jwt = require('jsonwebtoken');
-
+const { sendMail } = require('../utils/sendEmail');
 
 const resolvers = {
     Query: {
@@ -39,9 +38,12 @@ const resolvers = {
         }
     },
     Mutation: {
-        addUser: async (parent, args, { transporter, EMAIL_SECRET }) => {
+        addUser: async (parent, args) => {
             const user = await User.create(args);
-            const token = signToken(user);
+            
+            // async email confirmation, will create confirmation url and send to user in transporter
+            sendMail(args);
+            return user;
         }
     }
 };
