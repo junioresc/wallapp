@@ -26,7 +26,7 @@ export async function sendEmail({ username, email, _id }) {
         }
     });
     const mailOptions = {
-        from: '',
+        from: 'junioresc1092@gmail.com',
         to: email,
         subject: 'Email confirmation to access Wall App',
         html: htmlToSend
