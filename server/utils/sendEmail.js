@@ -19,10 +19,11 @@ export async function sendEmail({ username, email, _id }) {
     };
     const htmlToSend = template(replacements)
     const transporter = nodemailer.createTransport({
-        service: 'Gmail',
+        host: process.env.HOST,
+        port: process.env.EMAIL_PORT,
         auth: {
-            user: process.env.GMAIL_USER,
-            pass: process.env.GMAIL_PASS
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
     const mailOptions = {

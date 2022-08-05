@@ -19,6 +19,7 @@ const typeDefs = gql`
         _id: ID
         username: String
         email: String
+        confirmed: Boolean
         friendCount: Int
         posts: [Post]
         friends: [User]
