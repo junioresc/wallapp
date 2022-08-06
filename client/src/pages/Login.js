@@ -6,17 +6,18 @@ import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import HeroBg from '../components/HeroBg';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-import heroBg from '../imgs/login:signup.jpeg'
+
 
 const Login = props => {
     const [formState, setFormState] = useState({ email: '', password: '' });
     const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
-    const [login] = useMutation(LOGIN_USER);
+    const [login, { error }] = useMutation(LOGIN_USER);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -59,15 +60,15 @@ const Login = props => {
             <Container fluid='sm' className='d-flex align-self-stretch'>
                 <Row xs={1} md={1} lg={2}>
                     <Col className='d-flex'>
-                        <img src={heroBg} alt="login hero background" className='w-100 shadow-lg rounded'/>
+                        <HeroBg />
                     </Col>
                     <Col className='d-flex'>
                         <Card className='d-flex justify-self-center shadow p-2 mb-5 bg-white rounded w-100 h-100'>
-                            <Card.Header className='text-center bg-white'>Login</Card.Header>
+                            <Card.Header className='text-center bg-white'>Login to your account below!</Card.Header>
                             <Card.Body className='text-center'>
                                 <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
                                     <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-                                        Something went wrong logging in, Please try again.
+                                        {error ? error.message : 'Something went wrong logging in, Please try again.' }
                                     </Alert>
                                     <Form.Group className='mb-2'>
                                         <Form.Label htmlFor='email'>Email Address:</Form.Label>
@@ -79,7 +80,7 @@ const Login = props => {
                                             onChange={handleChange}
                                             required
                                             />
-                                            <Form.Control.Feedback type='invalid'>Your email can't be empty!</Form.Control.Feedback>
+                                            <Form.Control.Feedback type='invalid'>A valid email must be entered!</Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group className='mb-2'>
                                         <Form.Label htmlFor='password'>Password:</Form.Label>

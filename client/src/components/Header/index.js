@@ -16,7 +16,7 @@ const Header = () => {
         <header>
             <Navbar sticky="top" className='bg-white'>
                 <Container>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/">
                     <img
                     src={fullLogo}
                     width="300"

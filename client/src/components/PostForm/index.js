@@ -12,27 +12,7 @@ const PostForm = () => {
     const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
-    const [addPost] = useMutation(ADD_POST, {
-        update(cache, { data: {addPost } }) {
-            try {
-                const { posts } = cache.readQuery({ query: QUERY_POSTS});
-
-                cache.writeQuery({
-                    query: QUERY_POSTS,
-                    data: { posts: [addPost, ...posts] }
-                });
-            } catch (error) {
-                console.error(error);
-                setShowAlert(true);
-            }
-
-            const { me } = cache.readQuery({ query: QUERY_ME });
-            cache.writeQuery({
-                query: QUERY_ME,
-                data: { me: { ...me, posts: [...me.posts, addPost] } }
-            });
-        }
-    });
+    const [addPost] = useMutation(ADD_POST);
 
     const handleChange = event => {
         if(event.target.value.length <= 1000) {
@@ -70,7 +50,7 @@ const PostForm = () => {
             <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
                 Something went wrong with your post! :(
             </Alert>
-            <Form.Group controlId='postText'>
+            <Form.Group>
                 <Form.Label htmlFor='characterCount'>Character Count: { characterCount }/1000</Form.Label>
                 <Form.Control
                     type='text'
@@ -86,7 +66,8 @@ const PostForm = () => {
             <Button
                 disabled={!(postText)}
                 type='submit'
-                variant='outline-primary'>
+                variant='outline-primary'
+                className='m-2'>
                     Submit your Post
                 </Button>
         </Form>

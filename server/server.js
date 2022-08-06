@@ -39,7 +39,7 @@ const PORT = process.env.PORT || 3001;
             const { data: {_id} } = jwt.verify(req.params.token, emailSecret);
             await User.findByIdAndUpdate(
                 { _id: context.user._id },
-                { $push: { thoughts: thought._id } },
+                { $push: { confirmed: true } },
                 { new: true }
             );
     
