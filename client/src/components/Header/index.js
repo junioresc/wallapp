@@ -1,6 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav'
+import Container from 'react-bootstrap/Container';
 import Auth from '../../utils/auth';
+import fullLogo from '../../imgs/fullLogo.png';
 
 const Header = () => {
 
@@ -11,25 +14,32 @@ const Header = () => {
 
     return(
         <header>
-            <div>
-                <Link to='/'>
-                    <h1>Wall App</h1>
-                </Link>
-
-                <nav>
-                    {Auth.loggedIn() ? (
-                        <>
-                            <Link to='/profile'>My Account</Link>
-                            <a href="/" onClick={logout}>Logout</a>
-                        </>
+            <Navbar sticky="top" className='bg-white'>
+                <Container>
+                <Navbar.Brand href="#home">
+                    <img
+                    src={fullLogo}
+                    width="300"
+                    height="100"
+                    className="d-inline-block align-top img-fluid"
+                    alt="React Bootstrap logo"
+                    />
+                </Navbar.Brand>
+                <Nav>
+                {Auth.loggedIn() ? (
+                        <div className='d-flex w-100 justify-content-around container-fluid'>
+                            <Nav.Link href='/profile'>My Profile</Nav.Link>
+                            <Nav.Link href="/" onClick={logout} className='px-2'>Logout</Nav.Link>
+                        </div>
                     ) : (
-                        <>
-                            <Link to='/login'>Login</Link>
-                            <Link to='/signup'>Signup</Link>
-                        </>
+                        <div className="d-flex w-100 justify-content-around container-fluid">
+                            <Nav.Link href='/login'>Login</Nav.Link>
+                            <Nav.Link href='/signup'>Signup</Nav.Link>
+                        </div>
                     )}
-                </nav>
-            </div>
+                </Nav>
+                </Container>
+            </Navbar> 
         </header>
     );
 };

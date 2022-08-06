@@ -8,7 +8,7 @@ import { ADD_COMMENT } from '../../utils/mutations';
 const CommentForm = ({ postId }) => {
     const [commentText, setCommentText] = useState('');
     const [characterCount, setCharacterCount ] = useState(0);
-    const [validated] = useState(false);
+    const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
     const [addComment, { error }] = useMutation(ADD_COMMENT);
@@ -24,10 +24,12 @@ const CommentForm = ({ postId }) => {
         event.preventDefault();
         
         const form = event.currentTarget;
-        if(form.validity === false) {
+        if(form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }
+
+        setValidated(true);
 
         try {
             await addComment({

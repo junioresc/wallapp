@@ -17,7 +17,7 @@ const Home = () => {
     const loggedIn = Auth.loggedIn();
 
     return(
-        <main>
+        <main className='container-fluid'>
             <div>
                 {loggedIn && (
                     <div>

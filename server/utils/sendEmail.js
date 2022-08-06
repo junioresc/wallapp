@@ -5,7 +5,7 @@ const path = require('path');
 const { confirmEmailToken } = require('../utils/auth');
 
 
-export async function sendEmail({ username, email, _id }) {
+module.exports = async function sendEmail({ username, email, _id }) {
     const filePath = path.join(__dirname, '../emails/welcomeConfirmationEmail.html');
     const source = fs.readFileSync(filePath, 'utf-8').toString();
     const template = handlebars.compile(source);

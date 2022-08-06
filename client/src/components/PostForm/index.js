@@ -9,7 +9,7 @@ import { QUERY_POSTS, QUERY_ME } from '../../utils/queries';
 const PostForm = () => {
     const [postText, setPostText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
-    const [validated] = useState(false);
+    const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
     const [addPost] = useMutation(ADD_POST, {
@@ -49,6 +49,8 @@ const PostForm = () => {
             event.preventDefault();
             event.stopPropagation();
         }
+
+        setValidated(true);
 
         try {
             await addPost({
