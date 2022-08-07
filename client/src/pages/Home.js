@@ -27,7 +27,7 @@ const Home = () => {
                 <div>
                     {loading ? (
                         <Spinner animation='border' role='status'>
-                            <span>Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                         </Spinner>
                     ) : (
                         <PostList posts={posts} title='Here is what other people are thinking at this moment:' />

@@ -41,10 +41,23 @@ const resolvers = {
         addUser: async (parent, args) => {
             const user = await User.create(args);
             // async email confirmation, will create confirmation url and send to user in transporter
-            sendMail(args);
+            sendMail(user);
             return user;
         },
-        login: async (parent, { email, password}) => {
+        confirmation: async (parent, args, context) => {
+            console.log(args);
+            console.log(context);
+            if(context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $set: { confirmed: true } },
+                    { new: true }
+                ).populate('friends');
+
+                return updatedUser;
+            }
+        },
+        login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
 
             if(!User) {

@@ -41,6 +41,7 @@ const typeDefs = gql`
         addPost(postText: String!): Post
         addComment(postId: ID!, commentBody: String!): Post
         addFriend(friendId: ID!): User
+        confirmation(username: String!, email: String!, token:String!): User
     }
 `;
 

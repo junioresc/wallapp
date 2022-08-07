@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import SinglePost from "./pages/SinglePost";
 import NoMatch from "./pages/NoMatch";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ConfirmEmail from "./pages/ConfirmEmail";
 
 const client = new ApolloClient({
 	request: (operation) => {
@@ -42,6 +43,9 @@ function App() {
 							<Route path="/post">
 								<Route path=":id" element={<SinglePost />} />
 							</Route>
+							<Route path='/confirmation'>
+                <Route path=':token' element={<ConfirmEmail />} />
+              </Route>
 							<Route element={<NoMatch />} />
 						</Routes>
 					</div>

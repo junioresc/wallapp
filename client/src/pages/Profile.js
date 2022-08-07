@@ -12,7 +12,7 @@ import PostForm from "../components/PostForm";
 const Profile = (props) => {
 	const { username: userParam } = useParams();
 
-	const [addFriend] = useMutation(ADD_FRIEND);
+	const [addFriend, { error }] = useMutation(ADD_FRIEND);
 
 	const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
 		variables: { username: userParam },
@@ -27,7 +27,7 @@ const Profile = (props) => {
 	if (loading) {
 		return (
 			<Spinner animation="border" role="status">
-				<span>Loading...</span>
+				<span className="visually-hidden">Loading...</span>
 			</Spinner>
 		);
 	}

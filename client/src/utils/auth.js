@@ -10,6 +10,10 @@ class AuthService {
         return !!token &&!this.isTokenExpired(token);
     }
 
+    confirmEmail(token) {
+        return decode(token);
+    }
+
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
