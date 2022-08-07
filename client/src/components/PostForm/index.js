@@ -12,7 +12,26 @@ const PostForm = () => {
     const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
-    const [addPost] = useMutation(ADD_POST);
+    const [addPost, { error }] = useMutation(ADD_POST, {
+        update(cache, { data: { addPost } }) {
+            try {
+                const { posts } = cache.readQuery({ query: QUERY_POSTS });
+    
+                cache.writeQuery({
+                    query: QUERY_POSTS,
+                    data: { posts: [addPost, ...posts] }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+
+            const { me } = cache.readQuery({ query: QUERY_ME });
+            cache.writeQuery({
+                query: QUERY_ME,
+                data: { me: { ...me, thoughts: [...me.thoughts, addPost] } }
+            });
+        }
+    });
 
     const handleChange = event => {
         if(event.target.value.length <= 1000) {
@@ -48,7 +67,7 @@ const PostForm = () => {
     return(
         <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
             <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-                Something went wrong with your post! :(
+                {error ? error.message : 'Something went wrong with your post! :(' }
             </Alert>
             <Form.Group>
                 <Form.Label htmlFor='characterCount'>Character Count: { characterCount }/1000</Form.Label>

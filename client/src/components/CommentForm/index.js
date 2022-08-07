@@ -47,7 +47,7 @@ const CommentForm = ({ postId }) => {
     return(
         <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
             <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-                Something went wrong adding your comment, Please try again.
+                {error ? error.message : 'Something went wrong adding your comment, Please try again.' }
             </Alert>
             <Form.Group controlId='commentText'>
                 <Form.Label htmlFor='characterCount'>Character Count: { characterCount }/ 1000</Form.Label>

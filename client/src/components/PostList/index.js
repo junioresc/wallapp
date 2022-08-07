@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 
 const PostList = ({ posts, title }) => {
@@ -8,11 +9,11 @@ const PostList = ({ posts, title }) => {
     }
 
     return(
-        <>
+        <Container>
             <h3>{title}</h3>
             {posts &&
             posts.map(post => (
-                <Card key={post._id}>
+                <Card key={post._id} className='m-4'>
                     <Card.Header>
                         <Link to={`/profile/${post.username}`}
                         style={{ fontWeight: 700 }}>
@@ -31,7 +32,7 @@ const PostList = ({ posts, title }) => {
                     </Card.Body>
                 </Card>
             ))}
-        </>
+        </Container>
     );
 };
 
