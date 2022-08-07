@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 const dayjs = require('dayjs');
 const commentSchema = require('./Comment');
+let advancedFormat = require('dayjs/plugin/advancedFormat');
+dayjs.extend(advancedFormat);
 
 const postSchema = new Schema(
     {

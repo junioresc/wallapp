@@ -1,5 +1,7 @@
 const { Schema } = require('mongoose');
 const dayjs = require('dayjs');
+let advancedFormat = require('dayjs/plugin/advancedFormat');
+dayjs.extend(advancedFormat);
 
 const commentSchema = new Schema(
     {
