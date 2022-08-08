@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import Alert from 'react-bootstrap/Alert';
+import Alert from "react-bootstrap/Alert";
 import { Navigate, useParams } from "react-router-dom";
 import PostList from "../components/PostList";
 import FriendList from "../components/FriendList";
@@ -15,13 +15,14 @@ const Profile = (props) => {
 	const [showAlert, setShowAlert] = useState(false);
 
 	const [addFriend, { error }] = useMutation(ADD_FRIEND);
+	console.log({ username: userParam });
 
 	const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
 		variables: { username: userParam },
 	});
 
 	const user = data?.me || data?.user || {};
-
+	console.log(Auth.getProfile());
 	if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
 		return <Navigate to="/profile" />;
 	}
@@ -35,9 +36,9 @@ const Profile = (props) => {
 	}
 
 	if (!user?.username) {
-		console.log(user.username)
+		console.log(user);
 		return (
-			<h4>
+			<h4 className="text-center">
 				You need to be logged in to see this page. Use the navigation links
 				above to sign up or log in!
 			</h4>
@@ -56,11 +57,8 @@ const Profile = (props) => {
 
 	return (
 		<div>
-			<div className="mb-3">
-				<Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-                    {error ? error.message : 'Friend was not added, Please try again.' }
-            	</Alert>
-				<h2 className="bg-dark text-secondary p-3 display-inline-block">
+			<div>
+				<h2 className="px-5">
 					Viewing {userParam ? `${user.username}'s` : "your"} profile.
 				</h2>
 
@@ -73,13 +71,18 @@ const Profile = (props) => {
 
 			<div className="flex-row justify-space-between mb-3">
 				<div className="col-12 mb-3 col-lg-8">
-					<PostList
-						posts={user.posts}
-						title={`${user.username}'s posts...`}
-					/>
+					<PostList posts={user.posts} title={`${user.username}'s posts...`} />
 				</div>
 
 				<div className="col-12 col-lg-3 mb-3">
+					<Alert
+						dismissible
+						onClose={() => setShowAlert(false)}
+						show={showAlert}
+						variant="danger"
+					>
+						{error ? error.message : "Friend was not added, Please try again."}
+					</Alert>
 					<FriendList
 						username={user.username}
 						friendCount={user.friendCount}
@@ -87,7 +90,7 @@ const Profile = (props) => {
 					/>
 				</div>
 			</div>
-			<div className="mb-3">{!userParam && <PostForm />}</div>
+			{!userParam && <PostForm />}
 		</div>
 	);
 };

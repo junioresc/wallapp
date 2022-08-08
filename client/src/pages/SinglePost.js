@@ -28,7 +28,7 @@ const SinglePost = (props) => {
 
 	return (
 		<>
-			<Card>
+			<Card className="mx-4 my-2">
 				<Card.Header>
 					<Link to={`/profile/${post.username}`} style={{ fontWeight: 700 }}>
 						{post.username}

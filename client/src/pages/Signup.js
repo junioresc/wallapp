@@ -105,7 +105,7 @@ const Signup = () => {
                                             <Form.Control.Feedback type='invalid'>A password is required and must be longer than 5 characters!</Form.Control.Feedback>
                                     </Form.Group>
                                     <Button
-                                        disabled={!(userFormData)}
+                                        disabled={!(userFormData.username && userFormData.email && userFormData.password)}
                                         type='submit'
                                         variant='outline-primary'
                                         className='m-2'>

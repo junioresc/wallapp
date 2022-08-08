@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
     return(
-        <footer className='d-inline-flex w-100 justify-content-around pt-5'>
+        <footer className='d-inline-flex w-100 justify-content-around py-3'>
             <div className="text-center">
                 <h5>Creator</h5>
                 <a href="https://github.com/junioresc" className="badge text-dark">Junior Escobar</a>

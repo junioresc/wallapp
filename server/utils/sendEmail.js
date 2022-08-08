@@ -2,7 +2,6 @@ const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
 const fs = require("fs");
 const path = require("path");
-const { confirmEmailToken } = require("../utils/auth");
 const dotenv = require("dotenv");
 dotenv.config();
 

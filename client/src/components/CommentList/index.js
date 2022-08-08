@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 const CommentList = ({ comments }) => {
 	return (
 		<>
-			<h3>Comments</h3>
+			<h3 className="px-5 pt-2">Comments</h3>
 			{comments &&
 				comments.map((comment) => (
-					<Card key={comment._id}>
+					<Card key={comment._id} className='mx-5 my-3'>
 						<Card.Body>
 							{comment.commentBody} {"// "}
 							<Link to={`/profile/${comment.username}`}>

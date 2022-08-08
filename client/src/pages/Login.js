@@ -95,9 +95,9 @@ const Login = props => {
                                             <Form.Control.Feedback type='invalid'>Your password can't be empty!</Form.Control.Feedback>
                                     </Form.Group>
                                     <Button
-                                        disabled={!(formState)}
+                                        disabled={!(formState.email && formState.password)}
                                         type='submit'
-                                        variant='outline-success'
+                                        variant='outline-primary'
                                         className='m-2'>
                                             Submit
                                     </Button>

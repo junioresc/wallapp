@@ -65,7 +65,7 @@ const PostForm = () => {
     };
 
     return(
-        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="mx-5 my-2">
             <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
                 {error ? error.message : 'Something went wrong with your post! :(' }
             </Alert>

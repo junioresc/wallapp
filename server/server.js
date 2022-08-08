@@ -3,8 +3,6 @@ const { ApolloServer } = require('apollo-server-express');
 const db = require('./config/connection');
 const { authMiddleware } = require('./utils/auth');
 const path = require('path');
-const { User } = require('./models');
-const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
 dotenv.config();
 
