@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from 'react-bootstrap/Alert';
 import { Navigate, useParams } from "react-router-dom";
 import PostList from "../components/PostList";
 import FriendList from "../components/FriendList";
@@ -11,6 +12,7 @@ import PostForm from "../components/PostForm";
 
 const Profile = (props) => {
 	const { username: userParam } = useParams();
+	const [showAlert, setShowAlert] = useState(false);
 
 	const [addFriend, { error }] = useMutation(ADD_FRIEND);
 
@@ -33,6 +35,7 @@ const Profile = (props) => {
 	}
 
 	if (!user?.username) {
+		console.log(user.username)
 		return (
 			<h4>
 				You need to be logged in to see this page. Use the navigation links
@@ -54,6 +57,9 @@ const Profile = (props) => {
 	return (
 		<div>
 			<div className="mb-3">
+				<Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+                    {error ? error.message : 'Friend was not added, Please try again.' }
+            	</Alert>
 				<h2 className="bg-dark text-secondary p-3 display-inline-block">
 					Viewing {userParam ? `${user.username}'s` : "your"} profile.
 				</h2>
