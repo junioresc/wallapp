@@ -4,32 +4,33 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { useMutation } from '@apollo/client';
 import { ADD_POST } from '../../utils/mutations';
-import { QUERY_POSTS, QUERY_ME } from '../../utils/queries';
+import { QUERY_POSTS} from '../../utils/queries';
 
 const PostForm = () => {
     const [postText, setPostText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
-    const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
     const [addPost, { error }] = useMutation(ADD_POST, {
         update(cache, { data: { addPost } }) {
             try {
                 const { posts } = cache.readQuery({ query: QUERY_POSTS });
+                cache.modify({
+                    fields: {
+                        posts(existingPosts = []) {
+                            const newPostRef = cache.writeQuery({
+                                data: { posts: [addPost, ...posts] },
+                                query: QUERY_POSTS
+                            });
+                            return [...existingPosts, newPostRef]
+                        }
+                    }
+                })
     
-                cache.writeQuery({
-                    query: QUERY_POSTS,
-                    data: { posts: [addPost, ...posts] }
-                });
+                
             } catch (error) {
                 console.error(error);
             }
-
-            const { me } = cache.readQuery({ query: QUERY_ME });
-            cache.writeQuery({
-                query: QUERY_ME,
-                data: { me: { ...me, thoughts: [...me.thoughts, addPost] } }
-            });
         }
     });
 
@@ -42,15 +43,6 @@ const PostForm = () => {
 
     const handleFormSubmit = async event => {
         event.preventDefault();
-
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-
         try {
             await addPost({
                 variables: { postText }
@@ -65,7 +57,7 @@ const PostForm = () => {
     };
 
     return(
-        <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="mx-5 my-2">
+        <Form onSubmit={handleFormSubmit} className="d-flex flex-column container">
             <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
                 {error ? error.message : 'Something went wrong with your post! :(' }
             </Alert>
@@ -80,13 +72,12 @@ const PostForm = () => {
                     onChange={handleChange}
                     required
                     />
-                    <Form.Control.Feedback type='invalid'>Your post can't be empty!</Form.Control.Feedback>
             </Form.Group>
             <Button
                 disabled={!(postText)}
                 type='submit'
                 variant='outline-primary'
-                className='m-2'>
+                className='m-2 align-self-center'>
                     Submit your Post
                 </Button>
         </Form>

@@ -34,14 +34,14 @@ const client = new ApolloClient({
 	link: authLink.concat(httpLink),
 	cache: new InMemoryCache()
 });
-
+console.log(client.cache)
 function App() {
 	return (
 		<ApolloProvider client={client}>
 			<Router>
-				<div>
+				<div className="app">
 					<Header />
-					<div>
+					<div id="container">
 						<Routes>
 							<Route exact path="/" element={<Home />} />
 							<Route exact path="/login" element={<Login />} />
@@ -55,7 +55,7 @@ function App() {
 							<Route path="/confirmation">
 								<Route path=":token" element={<ConfirmEmail />} />
 							</Route>
-							<Route element={<NoMatch />} />
+							<Route path="*" element={<NoMatch />} />
 						</Routes>
 					</div>
 					<Footer />

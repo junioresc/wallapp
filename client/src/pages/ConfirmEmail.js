@@ -16,11 +16,9 @@ const ConfirmEmail = () => {
 
 	const confirmEmail = async () => {
 		try {
-			const data = confirmation({
+			confirmation({
 				variables: { ...userData },
 			});
-			console.log(userData);
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 			setShowAlert(true);
@@ -48,11 +46,13 @@ const ConfirmEmail = () => {
 					? error.message
 					: "Something went wrong confirming your email, Please try again."}
 			</Alert>
-			<h2>Thank you for confirming your email!</h2>
-			<h4>You will be redirected to the login page in 7 seconds.</h4>
-			<Spinner animation="border" role="status">
-				<span className="visually-hidden">Loading...</span>
-			</Spinner>
+			<div className="d-flex flex-column align-items-center">
+				<h2 className="text-center pt-5">Thank you for confirming your email!</h2>
+				<h4 className="text-center">You will be redirected to the login page in 5 seconds.</h4>
+				<Spinner animation="border" role="status" className="mt-5">
+					<span className="visually-hidden">Loading...</span>
+				</Spinner>
+			</div>
 		</>
 	);
 };

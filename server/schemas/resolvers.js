@@ -54,7 +54,6 @@ const resolvers = {
 					{ new: true }
 				)
                 
-                console.log(updatedUser)
                 return updatedUser;
 			}
 		},

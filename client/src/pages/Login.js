@@ -14,7 +14,6 @@ import Auth from '../utils/auth';
 
 const Login = props => {
     const [formState, setFormState] = useState({ email: '', password: '' });
-    const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
     const [login, { error }] = useMutation(LOGIN_USER);
@@ -30,15 +29,6 @@ const Login = props => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
-        const form = event.currentTarget;
-        if(form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-
         try {
             const { data } = await login({
                 variables: { ...formState }
@@ -66,7 +56,7 @@ const Login = props => {
                         <Card className='d-flex justify-self-center shadow p-2 mb-5 bg-white rounded w-100 h-100'>
                             <Card.Header className='text-center bg-white'>Login to your account below!</Card.Header>
                             <Card.Body className='text-center'>
-                                <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+                                <Form onSubmit={handleFormSubmit}>
                                     <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
                                         {error ? error.message : 'Something went wrong logging in, Please try again.' }
                                     </Alert>

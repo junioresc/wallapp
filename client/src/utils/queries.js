@@ -50,6 +50,7 @@ export const QUERY_USER = gql`
             posts {
                 _id
                 postText
+                username
                 createdAt
                 commentCount
             }

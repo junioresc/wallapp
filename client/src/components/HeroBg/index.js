@@ -17,16 +17,19 @@ const HeroBg = () => {
         writingDesk,
         yourStory
     ];
+    const randomSelection = async () => {
+        let num = Math.round(Math.random() * 10 / 2);
+        if (num > 5) {
+            return randomSelection();
+        }
+        return num;
+    };
 
     useEffect(() => {
-        const randomSelection = () => {
-            let num = Math.round(Math.random() * 10 / 2);
-            if (num > 5) {
-                return randomSelection();
-            }
-            return num;
-        };
-        setCount((count) => count = randomSelection());
+        (async () => {
+            const count = await randomSelection();
+            setCount(count);
+        })();
       }, []);
     
     return(

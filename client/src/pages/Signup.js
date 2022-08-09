@@ -12,7 +12,6 @@ import HeroBg from '../components/HeroBg';
 
 const Signup = () => {
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-    const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
     const [addUser, { error }] = useMutation(ADD_USER);
@@ -28,15 +27,6 @@ const Signup = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
-        const form = event.currentTarget;
-        if(form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-
         try {
             await addUser({
                 variables: { ...userFormData }
@@ -64,7 +54,7 @@ const Signup = () => {
                         <Card className='d-flex justify-self-center shadow p-2 mb-5 bg-white rounded w-100 h-100'>
                             <Card.Header className='text-center bg-white'>Join our Community!</Card.Header>
                             <Card.Body className='text-center'>
-                                <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+                                <Form onSubmit={handleFormSubmit}>
                                     <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
                                         {error ? error.message : 'Something went wrong signing up, Please try again.' }
                                     </Alert>

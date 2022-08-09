@@ -2,10 +2,10 @@ import React from 'react';
 
 const Footer = () => {
     return(
-        <footer className='d-inline-flex w-100 justify-content-around py-3'>
+        <footer className='d-inline-flex justify-content-around pt-5'>
             <div className="text-center">
                 <h5>Creator</h5>
-                <a href="https://github.com/junioresc" className="badge text-dark">Junior Escobar</a>
+                <a href="https://github.com/junioresc" rel="noopener noreferrer" target="_blank" className="githubLink text-dark"><i className="fab fa-github-square big" aria-hidden="true"></i> Junior Escobar</a>
             </div>
             <div className="text-center">
                 <a href="/privacy-policy">Read Our Privacy Policy</a>

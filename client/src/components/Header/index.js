@@ -14,20 +14,20 @@ const Header = () => {
 
     return(
         <header>
-            <Navbar sticky="top" className='bg-white'>
+            <Navbar sticky="top">
                 <Container>
                 <Navbar.Brand href="/">
                     <img
                     src={fullLogo}
                     width="300"
                     height="100"
-                    className="d-inline-block align-top img-fluid"
-                    alt="React Bootstrap logo"
+                    className="align-top img-fluid"
+                    alt="Wall App logo"
                     />
                 </Navbar.Brand>
                 <Nav>
                 {Auth.loggedIn() ? (
-                        <div className='d-flex w-100 justify-content-around container-fluid'>
+                        <div className='d-flex w-100 justify-content-around container-fluid align-items-center text-center'>
                             <Nav.Link href='/profile'>My Profile</Nav.Link>
                             <Nav.Link href="/" onClick={logout} className='px-2'>Logout</Nav.Link>
                         </div>

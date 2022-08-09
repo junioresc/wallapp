@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 
 const PostList = ({ posts, title }) => {
 	if (!posts.length) {
-		return <h3 className="text-center">No Posts Yet</h3>;
+		return <h3 className="text-center m-5">No Posts Yet</h3>;
 	}
 
 	return (
 		<Container>
-			<h3>{title}</h3>
+			<h3 className="mx-2 mt-3">{title}</h3>
 			{posts &&
 				posts.map((post) => (
-					<Card key={post._id} className="m-4">
+					<Card key={post._id} className="mx-2 my-4">
 						<Card.Body>
 							<Card.Title>
 								<Link

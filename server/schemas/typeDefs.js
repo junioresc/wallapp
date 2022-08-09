@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
     type Post {
-        _id: ID
+        _id: ID!
         postText: String
         createdAt: String
         username: String
@@ -10,13 +10,13 @@ const typeDefs = gql`
         comments: [Comment]
     }
     type Comment {
-        _id: ID
+        _id: ID!
         commentBody: String
         createdAt: String
         username: String
     }
     type User {
-        _id: ID
+        _id: ID!
         username: String
         email: String
         confirmed: Boolean

@@ -20,22 +20,35 @@ const SinglePost = (props) => {
 
 	if (loading) {
 		return (
-			<Spinner animation="border" role="status">
-				<span className="visually-hidden">Loading...</span>
-			</Spinner>
+			<div className="d-flex flex-column align-items-center">
+				<h3 className="text-center pt-5">Loading post.....</h3>
+				<Spinner animation="border" role="status" className="mt-5">
+					<span className="visually-hidden">Loading...</span>
+				</Spinner>
+			</div>
 		);
+	}
+
+	if(post === {}) {
+		return (
+			<h2 className='text-center pt-5'>
+            	Oops, looks like that post doesn't exist!
+        	</h2>
+		)
 	}
 
 	return (
 		<>
-			<Card className="mx-4 my-2">
-				<Card.Header>
-					<Link to={`/profile/${post.username}`} style={{ fontWeight: 700 }}>
-						{post.username}
-					</Link>{" "}
-					posted on {post.createdAt}
-				</Card.Header>
-				<Card.Body>{post.postText}</Card.Body>
+			<Card className="mx-4 mb-2">
+				<Card.Body>
+					<Card.Title>
+						<Link to={`/profile/${post.username}`} style={{ fontWeight: 700 }}>
+							{post.username}
+						</Link>{" "}
+						posted on {post.createdAt}
+					</Card.Title>
+					{post.postText}
+				</Card.Body>
 			</Card>
 
 			{post.commentCount > 0 && <CommentList comments={post.comments} />}

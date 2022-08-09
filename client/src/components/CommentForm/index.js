@@ -6,37 +6,27 @@ import { useMutation } from '@apollo/client';
 import { ADD_COMMENT } from '../../utils/mutations';
 
 const CommentForm = ({ postId }) => {
-    const [commentText, setCommentText] = useState('');
+    const [commentBody, setCommentBody] = useState('');
     const [characterCount, setCharacterCount ] = useState(0);
-    const [validated, setValidated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
     const [addComment, { error }] = useMutation(ADD_COMMENT);
 
     const handleChange = event => {
         if(event.target.value.length <= 1000) {
-            setCommentText(event.target.value);
+            setCommentBody(event.target.value);
             setCharacterCount(event.target.value.length);
         }
     };
 
     const handleFormSubmit = async event => {
         event.preventDefault();
-        
-        const form = event.currentTarget;
-        if(form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-
         try {
             await addComment({
-                variables: { commentText, postId }
+                variables: { commentBody, postId }
             });
 
-            setCommentText('');
+            setCommentBody('');
             setCharacterCount(0);
         } catch (error) {
             console.error(error)
@@ -45,27 +35,27 @@ const CommentForm = ({ postId }) => {
     };
 
     return(
-        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <Form onSubmit={handleFormSubmit} className="d-flex flex-column container">
             <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
                 {error ? error.message : 'Something went wrong adding your comment, Please try again.' }
             </Alert>
-            <Form.Group controlId='commentText'>
+            <Form.Group>
                 <Form.Label htmlFor='characterCount'>Character Count: { characterCount }/ 1000</Form.Label>
                 <Form.Control
                     type='text'
                     as='textarea'
                     placeholder='Have something interesting to add to the conversation? Share your thoughts!'
-                    name='commentText'
-                    value={commentText}
+                    name='commentBody'
+                    value={commentBody}
                     onChange={handleChange}
                     required
                     />
-                    <Form.Control.Feedback type='invalid'>Your comment can't be empty!</Form.Control.Feedback>
             </Form.Group>
             <Button
-                disabled={!(commentText)}
+                disabled={!(commentBody)}
                 type='submit'
-                variant='outline-primary'>
+                variant='outline-primary'
+                className='m-2 align-self-center'>
                     Add your comment
                 </Button>
         </Form>
