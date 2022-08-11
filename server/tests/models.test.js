@@ -94,6 +94,7 @@ describe("verifies mongoose User model works correctly", () => {
 		expect(updatedUser.confirmed).toBeTruthy();
 	});
 
+	// User.findById is necessary because if findoneandupdate is used then it skips the .pre('save') method and will not rehash new password
 	it("should update the password field to the new password and return encrypted", async () => {
 	    const savedUser = await User.create({ username: "testaccount", email: 'testaccount@gmail.com', password: 'testing1' });
 	    

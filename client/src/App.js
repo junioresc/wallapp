@@ -13,6 +13,7 @@ import NoMatch from "./pages/NoMatch";
 import ConfirmEmail from "./pages/ConfirmEmail";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const httpLink = createHttpLink({
 	uri: 'http://localhost:3001/graphql',
@@ -28,12 +29,21 @@ const httpLink = createHttpLink({
 		authorization: token ? `Bearer ${token}` : "",
 	  }
 	}
-  });
+});
 
 const client = new ApolloClient({
 	link: authLink.concat(httpLink),
-	cache: new InMemoryCache()
+	cache: new InMemoryCache({
+		typePolicies: {
+		  Query: {
+			fields: {
+			  posts: offsetLimitPagination()
+			}
+		  }
+		}
+	  })
 });
+
 console.log(client.cache)
 function App() {
 	return (

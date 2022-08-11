@@ -15,12 +15,12 @@ const FriendList = ({ friendCount, username, friends }) => {
     }
     
     return(
-        <Card className='d-flex mx-3 my-4 p-2 justify-content-center'>
+        <Card className='mx-3 my-4 py-2 px-5'>
             <Card.Title className='text-center'>
                 {username}'s {friendCount > 1 ? friendCount : ''} {friendCount === 1 ? 'friend' : 'friends'}
             </Card.Title>
             {friends.map(friend => (
-                <Button className="w-75 align-self-center mb-1" variant="light" key={friend._id}>
+                <Button className="w-100 align-self-center mb-1" variant="dark" key={friend._id}>
                     <Link to={`/profile/${friend.username}`}>{friend.username}</Link>
                 </Button>
             ))}

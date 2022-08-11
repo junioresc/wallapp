@@ -35,7 +35,7 @@ const Login = props => {
             });
             Auth.login(data.login.token);
         } catch (error) {
-            console.error(error);
+            console.log(error);
             setShowAlert(true);
         }
 
@@ -58,7 +58,7 @@ const Login = props => {
                             <Card.Body className='text-center'>
                                 <Form onSubmit={handleFormSubmit}>
                                     <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-                                        {error ? error.message : 'Something went wrong logging in, Please try again.' }
+                                        {error && error.message === 'Please confirm your email to login' ? error.message : 'Something went wrong logging in, Please try again.' }
                                     </Alert>
                                     <Form.Group className='mb-2'>
                                         <Form.Label htmlFor='email'>Email Address:</Form.Label>
