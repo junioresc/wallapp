@@ -11,8 +11,7 @@
     },
     "keywords": [],
     "jest": {
-        "verbose": true,
-        "testTimeout": 15000
+        "verbose": true
     },
     "author": "junioresc",
     "license": "MIT",

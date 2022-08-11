@@ -17,9 +17,9 @@ const resolvers = {
 
 			throw new AuthenticationError("Not logged in");
 		},
-		posts: async (parent, { username }) => {
+		posts: async (parent, { offset, limit, username  }) => {
 			const params = username ? { username } : {};
-			return Post.find(params).sort({ createdAt: -1 });
+			return Post.find(params).limit(limit).skip(offset).sort({ createdAt: -1 });
 		},
 		post: async (parent, { _id }) => {
 			return Post.findOne({ _id });

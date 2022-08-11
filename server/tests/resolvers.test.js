@@ -74,7 +74,7 @@ describe("checking requesting the necessary user data from graphql and expected 
 
 describe('testing out quering the logged in user and checking if authentication works', () => {
 
-	it("requests data from user with logged in credentials in context", async () => {
+	it("requests data of user with logged in credentials in context", async () => {
 		// Context is injected because there is no server request with a body. If testing please open up mongo in the terminal and
 		// search up kminchelle's object _id with username. db.users.find({ username: 'kminchelle' })
 		// when you seed the server, that users object id changes and resolver searches record using object id from jwt token
@@ -120,7 +120,7 @@ describe('testing out quering the logged in user and checking if authentication 
 		expect(result.data?.me.posts).toEqual(expect.any(Array));
 	});
 
-	it("requests data from user that is supposed to be logged in but should fail because no credentials", async () => {
+	it("requests data of user that is supposed to be logged in but should fail user is not logged in", async () => {
 	
 		const server = new ApolloServer({
 			typeDefs,
@@ -160,11 +160,38 @@ describe('testing out quering the logged in user and checking if authentication 
 	});
 });
 
-describe('team resolvers', () => {
+describe('testing out quering the posts and checking expected output', () => {
 
-	test('team should be an object', async () => {
-	  const dodgers = await resolvers.Query.team(teamFixture, { id: 119 })
-	  expect(dodgers).toStrictEqual(teamFixture)
-	  expect(dodgers.id).toBe(119)
-	})
+	it("requests data from user that is supposed to be logged in but should fail because no credentials", async () => {
+	
+		const server = new ApolloServer({
+			typeDefs,
+			resolvers
+		});
+		const result = await server.executeOperation({
+			query: `query posts($username: String) {
+				posts(username: $username) {
+					_id
+					postText
+					createdAt
+					username
+					commentCount
+					comments {
+						_id
+						createdAt
+						username
+						commentBody
+					}
+				}
+			}`,
+			variables: { username: 'kminchelle' },
+		});
+		console.log(result)
+		expect(result.data?.posts._id).toEqual(expect.any(String))
+		expect(result.data?.posts.username).toBe("kminchelle");
+		expect(result.data?.posts.email).toBe("kminchelle@qq.com");
+		expect(result.data?.posts.friendCount).toEqual(expect.any(Number));
+		expect(result.data?.posts.friends).toEqual(expect.any(Array));
+		expect(result.data?.posts.posts).toEqual(expect.any(Array));
+	});
 });

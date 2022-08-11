@@ -94,29 +94,21 @@ describe("verifies mongoose User model works correctly", () => {
 		expect(updatedUser.confirmed).toBeTruthy();
 	});
 
-	// it("should update the password field to the new password and return encrypted", async () => {
-	//     const savedUser = await User.create({ username: "testaccount", email: 'testaccount@gmail.com', password: 'testing1' });
-	//     // const updatedUser = await User.findById(savedUser._id, (err, user) => {
-	//     //   Object.assign(userSchema, { password: 'testingnewpassword'})
-	//     //   userSchema.save()
-	//     // })
-	//     const updatedUser = await User.findById(
-	//       { _id: savedUser._id },
-	//       { password: 'testingnewpassword' },
-	//       { new: true }
-	//       );
-	//     const hashedUser = await updatedUser.save(function(err) {
-	//       console.log(err.message); // something went wrong
-	//     });
-	//     expect(updatedUser._id).toBeDefined();
-	//     expect(updatedUser.email).toBe('testaccount@gmail.com');
-	//     expect(updatedUser.password).toBeDefined();
-	//     console.log(savedUser.password);
-	//     console.log(updatedUser.password);
-	//     console.log(hashedUser);
-	//     expect(updatedUser.password).toEqual(expect.not.stringMatching(savedUser.password));
-	//     expect(savedUser.confirmed).toBeFalsy();
-	// });
+	it("should update the password field to the new password and return encrypted", async () => {
+	    const savedUser = await User.create({ username: "testaccount", email: 'testaccount@gmail.com', password: 'testing1' });
+	    
+	    const updatedUser = await User.findById(
+	      { _id: savedUser._id }
+	    );
+		updatedUser.password = 'testingnewpassword'
+	    const hashedUser = await updatedUser.save();
+	    expect(hashedUser._id).toBeDefined();
+	    expect(hashedUser._id).toBe(updatedUser._id);
+	    expect(hashedUser.email).toBe('testaccount@gmail.com');
+	    expect(hashedUser.password).toBeDefined();
+	    expect(hashedUser.password).not.toEqual(savedUser.password);
+	    expect(hashedUser.confirmed).toBeFalsy();
+	});
 });
 
 /**
