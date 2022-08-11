@@ -1,11 +1,9 @@
-const express = require("express");
-const { typeDefs, resolvers } = require("../schemas");
-const database = require("../config/connection");
-const { ApolloServer } = require("apollo-server-express");
-const { authMiddleware } = require("../utils/auth");
-const mongoose = require("mongoose");
+const { ApolloServer, UserInputError } = require('apollo-server-express');
+const { GraphQLError } = require('graphql')
+const { typeDefs, resolvers } = require('../schemas');
 
 describe("checking requesting the necessary user data from graphql and expected output", () => {
+
 	it("returns a single queried user with all its available data", async () => {
 		const server = new ApolloServer({
 			typeDefs,
@@ -13,97 +11,160 @@ describe("checking requesting the necessary user data from graphql and expected 
 		});
 		const result = await server.executeOperation({
 			query: `query user($username: String!) {
-                    user(username: $username) {
-                        _id
-                        username
-                        email
-                        friendCount
-                        friends {
-                            _id
-                            username
-                        }
-                        posts {
-                            _id
-                            postText
-                            createdAt
-                            commentCount
-                        }
-                    }
-                }`,
-			variables: { username: "junioresc" },
+				user(username: $username) {
+					_id
+					username
+					email
+					friendCount
+					friends {
+						_id
+						username
+					}
+					posts {
+						_id
+						postText
+						createdAt
+						commentCount
+					}
+				}
+			}`,
+			variables: { username: 'kminchelle' },
 		});
 
 		expect(result.errors).toBeUndefined();
-		console.log(result.data);
-		expect(result.data?.user.username).toBe("junioresc");
-		expect(result.data?.user.email).toBe("junioresc1092@gmail.com");
-		expect(result.data?.user.friendCount).toBe(0);
-		expect(result.data?.user.friends).toEqual([]);
-		expect(result.data?.user.posts).toEqual([]);
+		expect(result.data?.user._id).toEqual(expect.any(String))
+		expect(result.data?.user.username).toBe("kminchelle");
+		expect(result.data?.user.email).toBe("kminchelle@qq.com");
+		expect(result.data?.user.friendCount).toEqual(expect.any(Number));
+		expect(result.data?.user.friends).toEqual(expect.any(Array));
+		expect(result.data?.user.posts).toEqual(expect.any(Array));
 	});
 
-	it("returns a single queried user with all its available data", async () => {
+	it("returns a single queried user but should fail because there is no username variable ex. if none is in resolver args", async () => {
 		const server = new ApolloServer({
 			typeDefs,
 			resolvers,
 		});
 		const result = await server.executeOperation({
-			query: 
-                `{
-                    me {
-                        _id
-                        username
-                        email
-                        confirmed
-                        friendCount
-                        friends {
-                            _id
-                            username
-                        }
-                        posts {
-                            _id
-                            postText
-                            createdAt
-                            commentCount
-                            comments {
-                                _id
-                                username
-                                createdAt
-                                commentBody
-                            }
-                        }
-                    }
-                }`
+			query: `query user($username: String!) {
+				user(username: $username) {
+					_id
+					username
+					email
+					friendCount
+					friends {
+						_id
+						username
+					}
+					posts {
+						_id
+						postText
+						createdAt
+						commentCount
+					}
+				}
+			}`
 		});
 
-		expect(result.errors).toBeUndefined();
-		console.log(result.data);
-		expect(result.data?.user.username).toBe("junioresc");
-		expect(result.data?.user.email).toBe("junioresc1092@gmail.com");
-		expect(result.data?.user.friendCount).toBe(0);
-		expect(result.data?.user.friends).toEqual([]);
-		expect(result.data?.user.posts).toEqual([]);
+		expect(result.errors).toBeDefined();
+		expect(result.errors[0]).toBeInstanceOf(UserInputError);
+		expect(result.errors[0].message).toBe('Variable "$username" of required type "String!" was not provided.')
 	});
 });
 
-// describe('persons resolver', () => {
+describe('testing out quering the logged in user and checking if authentication works', () => {
 
-//     test('name should be the username', async () => {
-//       const users = await resolvers.Query.players()
-//       expect(users[1].username).toBe('testaccount')
-//     })
+	it("requests data from user with logged in credentials in context", async () => {
+		// Context is injected because there is no server request with a body. If testing please open up mongo in the terminal and
+		// search up kminchelle's object _id with username. db.users.find({ username: 'kminchelle' })
+		// when you seed the server, that users object id changes and resolver searches record using object id from jwt token
+		const server = new ApolloServer({
+			typeDefs,
+			resolvers,
+			context: () => ({ user: { _id: '62f3fed219aec45d1407ac9f', username: "kminchelle", email: 'kminchelle@qq.com' } }),
+		});
+		const result = await server.executeOperation({
+			query: `{
+					me {
+						_id
+						username
+						email
+						confirmed
+						friendCount
+						friends {
+							_id
+							username
+						}
+						posts {
+							_id
+							postText
+							createdAt
+							commentCount
+							comments {
+								_id
+								username
+								createdAt
+								commentBody
+							}
+						}
+					}
+				}`,
+		});
 
-//     test('email should be specific', async () => {
-//       const users = await resolvers.Query.players()
-//       expect(users[0].email).toBe('helloworld@gmail.com')
-//     })
-//   })
+		expect(result.errors).toBeUndefined();
+		expect(result.data?.me._id).toEqual(expect.any(String))
+		expect(result.data?.me.username).toBe("kminchelle");
+		expect(result.data?.me.email).toBe("kminchelle@qq.com");
+		expect(result.data?.me.friendCount).toEqual(expect.any(Number));
+		expect(result.data?.me.friends).toEqual(expect.any(Array));
+		expect(result.data?.me.posts).toEqual(expect.any(Array));
+	});
 
-//   describe('team resolvers', () => {
+	it("requests data from user that is supposed to be logged in but should fail because no credentials", async () => {
+	
+		const server = new ApolloServer({
+			typeDefs,
+			resolvers
+		});
+		const result = await server.executeOperation({
+			query: `{
+					me {
+						_id
+						username
+						email
+						confirmed
+						friendCount
+						friends {
+							_id
+							username
+						}
+						posts {
+							_id
+							postText
+							createdAt
+							commentCount
+							comments {
+								_id
+								username
+								createdAt
+								commentBody
+							}
+						}
+					}
+				}`
+		});
 
-//     test('team should be an object', async () => {
-//       const dodgers = await resolvers.Query.team(teamFixture, { id: 119 })
-//       expect(dodgers).toStrictEqual(teamFixture)
-//       expect(dodgers.id).toBe(119)
-//     })
-//   })
+		expect(result.errors).toBeDefined();
+		expect(result.errors[0]).toBeInstanceOf(GraphQLError);
+		expect(result.errors[0].message).toBe('Not logged in')
+	});
+});
+
+describe('team resolvers', () => {
+
+	test('team should be an object', async () => {
+	  const dodgers = await resolvers.Query.team(teamFixture, { id: 119 })
+	  expect(dodgers).toStrictEqual(teamFixture)
+	  expect(dodgers.id).toBe(119)
+	})
+});

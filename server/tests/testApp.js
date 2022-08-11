@@ -1,8 +1,11 @@
 const express = require("express");
-const testApp = express();
 
-testApp.get("/", (req, res) => {
-  res.status(200).send("Hello World!");
-});
+const makeTestApp = async (testdb) => {
+  const app = express();
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
 
-module.exports = testApp;
+  return app;
+}
+
+module.exports = makeTestApp;

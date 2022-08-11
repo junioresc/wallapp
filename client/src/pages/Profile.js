@@ -76,17 +76,18 @@ const Profile = (props) => {
 					show={showAlert}
 					variant="danger"
 				>
-					{error ? error.message : "Friend was not added, Please try again."}
+					{/* {error && error 'Friend was not added, Please try again.' } */}
 				</Alert>
 				<FriendList
 					username={user.username}
 					friendCount={user.friendCount}
 					friends={user.friends}
 				/>
-				{!userParam && <PostForm />}
 			</div>
-
+			<div className="d-flex flex-column">
+			{!userParam && <PostForm />}
 			<PostList posts={user.posts} title={`${user.username}'s posts...`} />
+			</div>
 		</div>
 	);
 };
