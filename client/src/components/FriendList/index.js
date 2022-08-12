@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 const FriendList = ({ friendCount, username, friends }) => {
     if(!friends || !friends.length) {
         return(
-            <Card className='mx-5'>
+            <Card className='mx-5 my-4 py-2 px-5'>
                 <Card.Body className='text-center my-2 p-2'>
                     {username}, make some friends!
                 </Card.Body>

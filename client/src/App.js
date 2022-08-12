@@ -1,16 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
-import SinglePost from "./pages/SinglePost";
-import NoMatch from "./pages/NoMatch";
-import ConfirmEmail from "./pages/ConfirmEmail";
+import AnimatedRoutes from "./components/AnimatedRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
 import { offsetLimitPagination } from "@apollo/client/utilities";
@@ -51,23 +45,7 @@ function App() {
 			<Router>
 				<div className="app">
 					<Header />
-					<div id="container">
-						<Routes>
-							<Route exact path="/" element={<Home />} />
-							<Route exact path="/login" element={<Login />} />
-							<Route exact path="/signup" element={<Signup />} />
-							<Route path="/profile" element={<Profile />} >
-								<Route path=':username' element={<Profile />} />
-							</Route>
-							<Route path="/post">
-								<Route path=":id" element={<SinglePost />} />
-							</Route>
-							<Route path="/confirmation">
-								<Route path=":token" element={<ConfirmEmail />} />
-							</Route>
-							<Route path="*" element={<NoMatch />} />
-						</Routes>
-					</div>
+					<AnimatedRoutes />
 					<Footer />
 				</div>
 			</Router>

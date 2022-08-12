@@ -8,6 +8,7 @@ import { QUERY_POST } from "../utils/queries";
 import CommentList from "../components/CommentList";
 import Auth from "../utils/auth";
 import CommentForm from "../components/CommentForm";
+import { motion } from 'framer-motion';
 
 const SinglePost = (props) => {
 	const { id: postId } = useParams();

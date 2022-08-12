@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import HeroBg from '../components/HeroBg';
+import { motion } from 'framer-motion';
 
 const Signup = () => {
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
@@ -31,6 +32,7 @@ const Signup = () => {
             await addUser({
                 variables: { ...userFormData }
             });
+            window.location.assign("/registered");
         } catch (error) {
             console.error(error);
             setShowAlert(true);
@@ -44,7 +46,11 @@ const Signup = () => {
     };
 
     return (
-        <main>
+        <motion.main
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+        >
             <Container fluid='sm' className='d-flex align-self-stretch'>
                 <Row xs={1} md={1} lg={2}>
                     <Col className='d-flex'>
@@ -107,7 +113,7 @@ const Signup = () => {
                     </Col>
                 </Row>
             </Container>
-        </main>
+        </motion.main>
     );
 };
 

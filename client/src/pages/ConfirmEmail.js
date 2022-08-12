@@ -5,6 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { useMutation } from "@apollo/client";
 import { CONFIRM_EMAIL } from "../utils/mutations";
 import Auth from "../utils/auth";
+import { motion } from 'framer-motion';
 
 const ConfirmEmail = () => {
 	const { token } = useParams();
@@ -35,7 +36,11 @@ const ConfirmEmail = () => {
 	}, []);
 
 	return (
-		<>
+		<motion.div
+			initial={{opacity: 0}}
+			animate={{opacity: 1}}
+			exit={{opacity: 0}}
+		>
 			<Alert
 				dismissible
 				onClose={() => setShowAlert(false)}
@@ -53,7 +58,7 @@ const ConfirmEmail = () => {
 					<span className="visually-hidden">Loading...</span>
 				</Spinner>
 			</div>
-		</>
+		</motion.div>
 	);
 };
 

@@ -14,6 +14,7 @@ import Auth from "../utils/auth";
 import { ADD_FRIEND } from "../utils/mutations";
 import PostForm from "../components/PostForm";
 
+
 function simulateNetworkRequest() {
 	return new Promise((resolve) => setTimeout(resolve, 2000));
 }
@@ -125,48 +126,6 @@ const Profile = (props) => {
 					</Col>
                 </Row>
             </Container>
-		// <div className="d-flex flex-wrap justify-content-center flex-lg-nowrap">
-		// 	<div className="d-flex flex-column mt-4">
-		// 		<h5 className="mx-4 text-center">
-		// 			Viewing {userParam ? `${user.username}'s` : "your"} profile
-		// 		</h5>
-
-		// 		{userParam && Auth.loggedIn() ? (
-		// 			<button
-		// 				className="btn bg-dark text-white mx-5 mb-3"
-		// 				onClick={handleClick}
-		// 			>
-		// 				Add Friend
-		// 			</button>
-		// 		) : null}
-		// 		<Alert
-		// 			dismissible
-		// 			onClose={() => setShowAlert(false)}
-		// 			show={showAlert}
-		// 			variant="danger"
-		// 		>
-		// 			{error ? 'Friend was not added, Please try again.' : null }
-		// 		</Alert>
-		// 		<FriendList
-		// 			username={user.username}
-		// 			friendCount={user.friendCount}
-		// 			friends={user.friends}
-		// 		/>
-		// 	</div>
-		// 	<div className="d-flex flex-column">
-		// 	{!userParam && <PostForm />}
-		// 	<Container>
-		// 		<h3 className="mx-2 mt-3">{user.username}'s posts...</h3>
-		// 		{user.posts &&
-		// 			user.posts.map((post) => (
-		// 			<Post
-		// 				key={post._id}
-		// 				post={post}
-		// 			/>
-		// 			))}
-		// 	</Container>
-		// 	</div>
-		// </div>
 	);
 };
 

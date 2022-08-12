@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { motion } from 'framer-motion';
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 

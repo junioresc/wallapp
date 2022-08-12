@@ -8,6 +8,7 @@ import Auth from "../utils/auth";
 import FriendList from "../components/FriendList";
 import PostForm from "../components/PostForm";
 import { InView } from "react-intersection-observer";
+import { motion } from 'framer-motion';
 
 const Home = () => {
 	const { loading, data, fetchMore } = useQuery(QUERY_POSTS, {
@@ -24,63 +25,65 @@ const Home = () => {
 	const loggedIn = Auth.loggedIn();
 
 	return (
-		<main>
-			<div>
-				{loggedIn && (
-					<div>
-						<PostForm />
-					</div>
-				)}
+		<motion.main
+			initial={{opacity: 0}}
+			animate={{opacity: 1}}
+			exit={{opacity: 0}}
+		>
+			{loggedIn && (
 				<div>
-					{loading ? (
-						<div className="d-flex flex-column align-items-center">
-							<h3 className="text-center pt-5">Loading posts.....</h3>
-							<Spinner animation="border" role="status" className="mt-5">
-								<span className="visually-hidden">Loading...</span>
-							</Spinner>
-						</div>
-					) : (
-						
-						<Container>
-							<h3 className="mx-2 mt-3">Here is what other people are thinking at this moment:</h3>
-							{posts &&
-								posts.map(post => (
-								<Post
-									onLoadMore={() => fetchMore({
-										variables: {
-											offset: posts.length
-										}})}
-									post={post}
-									key={post._id}
-								/>
-								))}
-							{posts && (
-								<InView
-								onChange={async (inView) => {
-									const currentLength = posts.length || 0;
-									if (inView) {
-									await fetchMore({
-										variables: {
-										offset: currentLength,
-										limit: currentLength * 2,
-										},
-									});
-									}
-								}}
-								/>
-							)}
-						</Container>
-					)}
+					<PostForm />
 				</div>
-				{loggedIn && userData ? (
-                    <FriendList
-                        username={userData.me.username}
-                        friendCount={userData.me.friendCount}
-                        friends={userData.me.friends}
-                    />
-				) : null}
+			)}
+			<div>
+				{loading ? (
+					<div className="d-flex flex-column align-items-center">
+						<h3 className="text-center pt-5">Loading posts.....</h3>
+						<Spinner animation="border" role="status" className="mt-5">
+							<span className="visually-hidden">Loading...</span>
+						</Spinner>
+					</div>
+				) : (
+					
+					<Container>
+						<h3 className="mx-2 mt-3">Here is what other people are thinking at this moment:</h3>
+						{posts &&
+							posts.map(post => (
+							<Post
+								onLoadMore={() => fetchMore({
+									variables: {
+										offset: posts.length
+									}})}
+								post={post}
+								key={post._id}
+							/>
+							))}
+						{posts && (
+							<InView
+							onChange={async (inView) => {
+								const currentLength = posts.length || 0;
+								if (inView) {
+								await fetchMore({
+									variables: {
+									offset: currentLength,
+									limit: currentLength * 2,
+									},
+								});
+								}
+							}}
+							/>
+						)}
+					</Container>
+				)}
 			</div>
-		</main>
+			{loggedIn && userData ? (
+				<FriendList
+					username={userData.me.username}
+					friendCount={userData.me.friendCount}
+					friends={userData.me.friends}
+				/>
+			) : null}
+		</motion.main>
 	);
 };
 

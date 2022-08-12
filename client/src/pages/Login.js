@@ -10,6 +10,7 @@ import HeroBg from '../components/HeroBg';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { motion } from 'framer-motion';
 
 
 const Login = props => {
@@ -46,7 +47,11 @@ const Login = props => {
     };
 
     return (
-        <main>
+        <motion.main
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+        >
             <Container fluid='sm' className='d-flex align-self-stretch'>
                 <Row xs={1} md={1} lg={2}>
                     <Col className='d-flex'>
@@ -97,7 +102,7 @@ const Login = props => {
                     </Col>
                 </Row>
             </Container>
-        </main>
+        </motion.main>
     );
 };
 
