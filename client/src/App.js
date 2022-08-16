@@ -39,14 +39,16 @@ const client = new ApolloClient({
 		  User: {
 			fields: {
 				friends: {
-					merge: false
+					merge(existing = [], incoming) {
+						return [...existing, ...incoming];
+					}
 				}
 			}
 		  }
 		}
 	  })
 });
-
+console.log(client.cache)
 function App() {
 	return (
 		<ApolloProvider client={client}>

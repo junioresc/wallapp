@@ -16,7 +16,11 @@ const FriendButton = ({ userParam, user }) => {
     const [showAlert, setShowAlert] = useState(false);
 
     const [addFriend, { error }] = useMutation(ADD_FRIEND);
-    const [removeFriend] = useMutation(REMOVE_FRIEND);
+    const [removeFriend] = useMutation(REMOVE_FRIEND, {
+        refetchQueries: [
+          {query: QUERY_ME_BASIC}
+        ],
+      });
 
     const [isLoading, setLoading] = useState(false);
 
