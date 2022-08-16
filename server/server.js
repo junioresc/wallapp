@@ -3,6 +3,7 @@ const { ApolloServer } = require('apollo-server-express');
 const db = require('./config/connection');
 const { authMiddleware } = require('./utils/auth');
 const path = require('path');
+const http = require('http');
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -12,10 +13,11 @@ const PORT = process.env.PORT || 3001;
 
 (async function () {
     const app = express();
-    
+    const httpServer = http.createServer(app);
     const server = new ApolloServer({
         typeDefs,
         resolvers,
+        cache: 'bounded',
         context: authMiddleware
     });
     
