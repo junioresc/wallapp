@@ -12,12 +12,8 @@ import { offsetLimitPagination } from "@apollo/client/utilities";
 const PORT = process.env.PORT || 3001;
 
 const httpLink = createHttpLink({
-	uri: `https://wall-app-social.herokuapp.com/graphql`,
+	uri: `http://localhost:${PORT}/graphql`,
 });
-// if testing locally please use this link
-// const httpLink = createHttpLink({
-// 	uri: `http://localhost:3001/graphql`,
-// });
   
 const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists
