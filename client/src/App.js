@@ -8,8 +8,6 @@ import AnimatedRoutes from "./components/AnimatedRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
 import { offsetLimitPagination } from "@apollo/client/utilities";
-const dotenv = require("dotenv");
-dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 
