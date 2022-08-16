@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3001;
     
     await server.start();
     
-    server.applyMiddleware({ app, path: '/https://wall-app-social.herokuapp.com/' });
+    server.applyMiddleware({ app });
     
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
