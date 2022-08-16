@@ -8,13 +8,9 @@ import AnimatedRoutes from "./components/AnimatedRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
 import { offsetLimitPagination } from "@apollo/client/utilities";
-const dotenv = require("dotenv");
-dotenv.config();
-
-const PORT = process.env.PORT || 3001;
 
 const httpLink = createHttpLink({
-	uri: `http://localhost:${PORT}/graphql`,
+	uri: `http://localhost:${process.env.PORT}/graphql`,
   });
   
   const authLink = setContext((_, { headers }) => {
@@ -49,7 +45,6 @@ const client = new ApolloClient({
 	  })
 });
 
-console.log(client.cache)
 function App() {
 	return (
 		<ApolloProvider client={client}>

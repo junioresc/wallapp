@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import { motion } from 'framer-motion';
 
