@@ -12,7 +12,7 @@ import { offsetLimitPagination } from "@apollo/client/utilities";
 const PORT = process.env.PORT || 3001;
 
 const httpLink = createHttpLink({
-	uri: `https://wall-app-social.herokuapp.com/`,
+	uri: `https://wall-app-social.herokuapp.com/graphql`,
 });
 // if testing locally please use this link
 // const httpLink = createHttpLink({
