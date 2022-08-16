@@ -8,9 +8,13 @@ import AnimatedRoutes from "./components/AnimatedRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
 import { offsetLimitPagination } from "@apollo/client/utilities";
+const dotenv = require("dotenv");
+dotenv.config();
+
+const PORT = process.env.PORT || 3001;
 
 const httpLink = createHttpLink({
-	uri: 'http://localhost:3001/graphql',
+	uri: `http://localhost:${PORT}/graphql`,
   });
   
   const authLink = setContext((_, { headers }) => {
