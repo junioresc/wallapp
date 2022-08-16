@@ -8,12 +8,20 @@ import AnimatedRoutes from "./components/AnimatedRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
 import { offsetLimitPagination } from "@apollo/client/utilities";
+const dotenv = require("dotenv");
+dotenv.config();
+
+const PORT = process.env.PORT || 3001;
 
 const httpLink = createHttpLink({
-	uri: `http://localhost:${process.env.PORT}/graphql`,
-  });
+	uri: `https://wall-app-social.herokuapp.com/`,
+});
+// if testing locally please use this link
+// const httpLink = createHttpLink({
+// 	uri: `http://localhost:3001/graphql`,
+// });
   
-  const authLink = setContext((_, { headers }) => {
+const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists
 	const token = localStorage.getItem('id_token');
 	// return the headers to the context so httpLink can read them
