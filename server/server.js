@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 3001;
 
 (async function () {
     const app = express();
-    const httpServer = http.createServer(app);
     const server = new ApolloServer({
         typeDefs,
         resolvers,
@@ -23,7 +22,7 @@ const PORT = process.env.PORT || 3001;
     
     await server.start();
     
-    server.applyMiddleware({ app });
+    server.applyMiddleware({ app, path: '/' });
     
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
