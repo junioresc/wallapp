@@ -1,14 +1,30 @@
-const { ApolloServer, UserInputError } = require('apollo-server-express');
+const { ApolloServer, UserInputError, gql } = require('apollo-server-express');
 const { GraphQLError } = require('graphql')
 const { typeDefs, resolvers } = require('../schemas');
+const db = require('./testdb');
+
+let server;
+
+beforeAll(async () => {
+	server = new ApolloServer({
+		typeDefs,
+		resolvers
+	});
+});
+
+afterEach(async () => {
+	
+});
+
+afterAll(async () => {
+	
+});
+
 
 describe("checking requesting the necessary user data from graphql and expected output", () => {
-
+	
 	it("returns a single queried user with all its available data", async () => {
-		const server = new ApolloServer({
-			typeDefs,
-			resolvers,
-		});
+	
 		const result = await server.executeOperation({
 			query: `query user($username: String!) {
 				user(username: $username) {
@@ -31,6 +47,8 @@ describe("checking requesting the necessary user data from graphql and expected 
 			variables: { username: 'kminchelle' },
 		});
 
+		console.error(result.errors)
+		expect.assertions(7)
 		expect(result.errors).toBeUndefined();
 		expect(result.data?.user._id).toEqual(expect.any(String))
 		expect(result.data?.user.username).toBe("kminchelle");
@@ -41,10 +59,6 @@ describe("checking requesting the necessary user data from graphql and expected 
 	});
 
 	it("returns a single queried user but should fail because there is no username variable ex. if none is in resolver args", async () => {
-		const server = new ApolloServer({
-			typeDefs,
-			resolvers,
-		});
 		const result = await server.executeOperation({
 			query: `query user($username: String!) {
 				user(username: $username) {
@@ -78,12 +92,12 @@ describe('testing out quering the logged in user and checking if authentication 
 		// Context is injected because there is no server request with a body. If testing please open up mongo in the terminal and
 		// search up kminchelle's object _id with username. db.users.find({ username: 'kminchelle' })
 		// when you seed the server, that users object id changes and resolver searches record using object id from jwt token
-		const server = new ApolloServer({
+		const contextServer = new ApolloServer({
 			typeDefs,
 			resolvers,
 			context: () => ({ user: { _id: '62f5bb7f07df66b2eb92c062', username: "kminchelle", email: 'kminchelle@qq.com' } }),
 		});
-		const result = await server.executeOperation({
+		const result = await contextServer.executeOperation({
 			query: `{
 					me {
 						_id
@@ -121,11 +135,7 @@ describe('testing out quering the logged in user and checking if authentication 
 	});
 
 	it("requests data of user that is supposed to be logged in but should fail user is not logged in", async () => {
-	
-		const server = new ApolloServer({
-			typeDefs,
-			resolvers
-		});
+
 		const result = await server.executeOperation({
 			query: `{
 					me {
@@ -160,38 +170,33 @@ describe('testing out quering the logged in user and checking if authentication 
 	});
 });
 
-// describe('testing out quering the posts and checking expected output', () => {
+describe('testing out quering the posts and checking expected output', () => {
 
-// 	it("requests data from user that is supposed to be logged in but should fail because no credentials", async () => {
-	
-// 		const server = new ApolloServer({
-// 			typeDefs,
-// 			resolvers
-// 		});
-// 		const result = await server.executeOperation({
-// 			query: `query posts($username: String) {
-// 				posts(username: $username) {
-// 					_id
-// 					postText
-// 					createdAt
-// 					username
-// 					commentCount
-// 					comments {
-// 						_id
-// 						createdAt
-// 						username
-// 						commentBody
-// 					}
-// 				}
-// 			}`,
-// 			variables: { username: 'kminchelle' },
-// 		});
-// 		console.log(result)
-// 		expect(result.data?.posts._id).toEqual(expect.any(String))
-// 		expect(result.data?.posts.username).toBe("kminchelle");
-// 		expect(result.data?.posts.email).toBe("kminchelle@qq.com");
-// 		expect(result.data?.posts.friendCount).toEqual(expect.any(Number));
-// 		expect(result.data?.posts.friends).toEqual(expect.any(Array));
-// 		expect(result.data?.posts.posts).toEqual(expect.any(Array));
-// 	});
-// });
+	it("requests data from user that is supposed to be logged in but should fail because no credentials", async () => {
+		const result = await server.executeOperation({
+			query: `query posts($username: String) {
+				posts(username: $username) {
+					_id
+					postText
+					createdAt
+					username
+					commentCount
+					comments {
+						_id
+						createdAt
+						username
+						commentBody
+					}
+				}
+			}`,
+			variables: { username: 'kminchelle' },
+		});
+		
+		expect(result.data?.posts._id).toEqual(expect.any(String))
+		expect(result.data?.posts.username).toBe("kminchelle");
+		expect(result.data?.posts.email).toBe("kminchelle@qq.com");
+		expect(result.data?.posts.friendCount).toEqual(expect.any(Number));
+		expect(result.data?.posts.friends).toEqual(expect.any(Array));
+		expect(result.data?.posts.posts).toEqual(expect.any(Array));
+	});
+});

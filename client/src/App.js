@@ -33,6 +33,13 @@ const client = new ApolloClient({
 			fields: {
 			  posts: offsetLimitPagination()
 			}
+		  },
+		  User: {
+			fields: {
+				friends: {
+					merge: false
+				}
+			}
 		  }
 		}
 	  })

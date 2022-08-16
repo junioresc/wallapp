@@ -20,9 +20,11 @@ const FriendList = ({ friendCount, username, friends }) => {
                 {username}'s {friendCount > 1 ? friendCount : ''} {friendCount === 1 ? 'friend' : 'friends'}
             </Card.Title>
             {friends.map(friend => (
-                <Button className="w-100 align-self-center mb-1" variant="dark" key={friend._id}>
-                    <Link to={`/profile/${friend.username}`}>{friend.username}</Link>
-                </Button>
+                <Link key={friend._id} to={`/profile/${friend.username}`}>
+                    <Button className="w-100 align-self-center mb-1" variant="dark">
+                        {friend.username}
+                    </Button>
+                </Link>
             ))}
         </Card>
     );

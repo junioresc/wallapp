@@ -1,39 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
 import { Navigate, useParams } from "react-router-dom";
 import Post from "../components/Post";
 import Container from "react-bootstrap/Container";
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';	
+import Col from 'react-bootstrap/Col';	
 import FriendList from "../components/FriendList";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
-import { ADD_FRIEND } from "../utils/mutations";
 import PostForm from "../components/PostForm";
+import FriendButton from '../components/FriendButton';
 
-
-function simulateNetworkRequest() {
-	return new Promise((resolve) => setTimeout(resolve, 2000));
-}
-
-const Profile = (props) => {
+const Profile = () => {
 	const { username: userParam } = useParams();
-	const [showAlert, setShowAlert] = useState(false);
-
-	const [addFriend, { error }] = useMutation(ADD_FRIEND);
-
-	const [isLoading, setLoading] = useState(false);
-
-	useEffect(() => {
-		if (isLoading) {
-		simulateNetworkRequest().then(() => {
-			setLoading(false);
-		});
-		}
-	}, [isLoading]);
 
 	const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
 		variables: { username: userParam },
@@ -64,21 +44,6 @@ const Profile = (props) => {
 		);
 	}
 
-	console.log(user)
-
-	const handleClick = async () => {
-		try {
-			setLoading(true)
-			await addFriend({
-				variables: { id: user._id },
-			});
-
-		} catch (error) {
-			console.error(error);
-			setShowAlert(true)
-		}
-	};
-
 	return (
 		<Container fluid='sm'>
                 <Row xs={1} md={1} lg={2}>
@@ -87,24 +52,7 @@ const Profile = (props) => {
 						Viewing {userParam ? `${user.username}'s` : "your"} profile
 					</h5>
 
-					{userParam && Auth.loggedIn() ? (
-						<Button
-							className="mx-5"
-							disabled={isLoading}
-							onClick={!isLoading ? handleClick : null}
-							variant="dark"
-						>
-							{isLoading ? 'Adding…' : 'Add Friend'}
-						</Button>
-					) : null}
-					<Alert
-						dismissible
-						onClose={() => setShowAlert(false)}
-						show={showAlert}
-						variant="danger"
-					>
-						{error ? 'Friend was not added, Please try again.' : null }
-					</Alert>
+					{userParam && Auth.loggedIn() ? <FriendButton user={user} userParam={userParam} /> : null}
 					<FriendList
 						username={user.username}
 						friendCount={user.friendCount}

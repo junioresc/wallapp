@@ -1,22 +1,6 @@
 import React, { useRef } from "react";
-import { motion } from 'framer-motion';
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-
-const cardVariants = {
-	offscreen: {
-	  y: 300
-	},
-	onscreen: {
-	  y: 50,
-	  rotate: -10,
-	  transition: {
-		type: "spring",
-		bounce: 0.4,
-		duration: 0.8
-	  }
-	}
-};
 
 const Post = ({ post }) => {
 
@@ -39,8 +23,8 @@ const Post = ({ post }) => {
 					</Link>{" "}
 					posted on {post.createdAt}
 				</Card.Title>
-					<p>{post.postText}</p>
 				<Link to={`/post/${post._id}`}>
+					<p>{post.postText}</p>
 					<p>
 						Comments: {post.commentCount} || Click to{" "}
 						{post.commentCount ? "see" : "start"} the discussion!
