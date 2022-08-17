@@ -9,10 +9,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
 import { offsetLimitPagination } from "@apollo/client/utilities";
 
-const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || `http://localhost:3001`;
 
 const httpLink = createHttpLink({
-	uri: `http://localhost:${PORT}/graphql`,
+	uri: `${HOST}/graphql`,
 });
   
 const authLink = setContext((_, { headers }) => {
