@@ -16,7 +16,7 @@ module.exports = async function sendEmail({ username, email }, token) {
 	const url = link + token;
 	const replacements = {
 		username: username,
-		mainPage: process.env.MAIN_PAGE,
+		mainPage: process.env.MAIN_PAGE || "http://localhost:3000/",
 		url: url,
 	};
 	const htmlToSend = template(replacements);
