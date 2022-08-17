@@ -1,6 +1,6 @@
 # Wall App
 
-[![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE.txt)
+[![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/junioresc/wallapp/blob/main/LICENSE)
 
 ## Table of Contents
 
@@ -33,9 +33,20 @@ You will also see any lint errors in the console.
 
 This will seed data into the database to create users, posts, comments and also make the created users have friends.
 
+## Important:
+This Application uses environment variables to store and protect the email SMTP settings. I'm using a seperate Gmail account to handle sending emails using a generated Application passsword. If you are testing the entire site flow locally, this step will fail unless you have your own Gmail credentials and set up a `.env` file inside the `server` directory with the following variables.<br />
+```
+HOST=smtp.gmail.com
+EMAIL_PORT=465
+EMAIL_USER=(Your email)
+EMAIL_PASS=(Your gmail generated application password)
+SECRET=supersecretpassword
+```
+If that is too much, then I suggest to kindly use the deployed site at the link below as all functionality is working.
+
 ### Website Link
 --------------------
-You can also checkout the live deployed site on: [Wall-App-Social](https://wall-app-social.herokuapp.com/)
+You can checkout the live deployed site on: [Wall-App-Social](https://wall-app-social.herokuapp.com/)
 
 ### Creating an account
 --------------------
@@ -44,7 +55,7 @@ You can also checkout the live deployed site on: [Wall-App-Social](https://wall-
 You can create an account by putting in a unique username, a valid email, and a password that is longer than 5 characters.<br />
 After submitting you will recieve an email from the site to confirm your email, please check your inbox or spam as you will not be able to sign in until you verify your email. The email will look like so once recieved:
 
-<img width="905" alt="Wall App Confirmation Email" src="https://user-images.githubusercontent.com/53980378/185241495-af5b5ab8-5102-4455-857e-30cdd903d1a7.png">
+<img align="center" width="905" alt="Wall App Confirmation Email" src="https://user-images.githubusercontent.com/53980378/185241495-af5b5ab8-5102-4455-857e-30cdd903d1a7.png">
 
 After clicking the button you will be able to create your own posts for others to see and you will be able to add and remove friends.
 
@@ -59,7 +70,7 @@ Currently there is only tests verifying the database reads and writes informatio
 
 ## License
 
-Licensed under the [MIT License](LICENSE.txt).
+Licensed under the [MIT License](https://github.com/junioresc/wallapp/blob/main/LICENSE).
 
 ## Questions
 
