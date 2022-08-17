@@ -23,7 +23,7 @@ In the project directory, first install all the dependencies by typing `npm i` a
 ### `npm start`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br />
 Open [http://localhost:3001/graphql](http://localhost:3001/graphql) to query the backend server in the browser.
 
 The page will reload if you make edits on the backend or frontend.<br />
@@ -31,14 +31,14 @@ You will also see any lint errors in the console.
 
 ### `npm run seed`
 
-This will seed data into the database to create users, posts and also make the users have friends
+This will seed data into the database to create users, posts, comments and also make the created users have friends.
 
 ### Website Link
-
+--------------------
 You can also checkout the live deployed site on: [Wall-App-Social](https://wall-app-social.herokuapp.com/)
 
 ### Creating an account
-
+--------------------
 <img width="1512" alt="Wall App Sign Up page" src="https://user-images.githubusercontent.com/53980378/185240883-ae69b784-a3f1-49bc-b971-bd6f885b69a1.png">
 
 You can create an account by putting in a unique username, a valid email, and a password that is longer than 5 characters.<br />
@@ -46,7 +46,7 @@ After submitting you will recieve an email from the site to confirm your email, 
 
 <img width="905" alt="Wall App Confirmation Email" src="https://user-images.githubusercontent.com/53980378/185241495-af5b5ab8-5102-4455-857e-30cdd903d1a7.png">
 
-After clicking the button you will be able to create your own posts for others to see and you will be able to add and remove friends
+After clicking the button you will be able to create your own posts for others to see and you will be able to add and remove friends.
 
 ## Testing
 
