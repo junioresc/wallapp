@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { useMutation } from '@apollo/client';
 import { ADD_POST } from '../../utils/mutations';
-import { QUERY_POSTS} from '../../utils/queries';
+import { QUERY_POSTS } from '../../utils/queries';
 
 const PostForm = () => {
     const [postText, setPostText] = useState('');

@@ -48,7 +48,7 @@ const client = new ApolloClient({
 		}
 	  })
 });
-console.log(client.cache)
+
 function App() {
 	return (
 		<ApolloProvider client={client}>

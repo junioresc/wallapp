@@ -8,7 +8,7 @@ const Footer = () => {
                 <a href="https://github.com/junioresc" rel="noopener noreferrer" target="_blank" className="customLink text-dark"><i className="fab fa-github-square big" aria-hidden="true"></i> Junior Escobar</a>
             </div>
             <div className="text-center">
-                <a href="/privacy-policy">Read Our Privacy Policy</a>
+                <a href="#">Read Our Privacy Policy</a>
                 <p>&copy;2022 by Junior Escobar</p>
             </div>
         </footer>

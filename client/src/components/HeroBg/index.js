@@ -17,6 +17,7 @@ const HeroBg = () => {
         writingDesk,
         yourStory
     ];
+    
     const randomSelection = async () => {
         let num = Math.round(Math.random() * 10 / 2);
         if (num > 5) {
