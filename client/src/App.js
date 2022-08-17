@@ -9,10 +9,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css"
 import { offsetLimitPagination } from "@apollo/client/utilities";
 
-const HOST = process.env.HOST || `http://localhost:3001`;
+const REACT_APP_HOST = process.env.REACT_APP_HOST || `http://localhost:3001`;
 
 const httpLink = createHttpLink({
-	uri: `${HOST}/graphql`,
+	uri: `${REACT_APP_HOST}/graphql`,
 });
   
 const authLink = setContext((_, { headers }) => {
