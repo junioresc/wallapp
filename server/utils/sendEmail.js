@@ -21,16 +21,16 @@ module.exports = async function sendEmail({ username, email }, token) {
 	};
 	const htmlToSend = template(replacements);
 	const transporter = nodemailer.createTransport({
-		host: process.env.MAILGUN_SMTP_SERVER || process.env.HOST,
-		port: process.env.MAILGUN_SMTP_PORT || process.env.EMAIL_PORT,
+		host: process.env.HOST,
+		port: process.env.EMAIL_PORT,
 		secure: true,
 		auth: {
-			user: process.env.MAILGUN_SMTP_LOGIN || process.env.EMAIL_USER,
-			pass: process.env.MAILGUN_SMTP_PASSWORD || process.env.EMAIL_PASS,
+			user: process.env.EMAIL_USER,
+			pass: process.env.EMAIL_PASS,
 		},
 	});
 	const mailOptions = {
-		from: process.env.MAILGUN_SMTP_LOGIN || "junioresc1092@gmail.com",
+		from: process.env.EMAIL_USER,
 		to: email,
 		subject: "Email confirmation to access Wall App",
 		attachments: [
