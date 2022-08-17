@@ -12,8 +12,7 @@ module.exports = async function sendEmail({ username, email }, token) {
 	);
 	const source = fs.readFileSync(filePath, "utf-8").toString();
 	const template = handlebars.compile(source);
-	const link = process.env.MAIN_PAGE || "http://localhost:3000/" + "confirmation/";
-	console.log(link);
+	const link = process.env.MAIN_PAGE ? `${process.env.MAIN_PAGE}/confirmation/` : "http://localhost:3000/confirmation/";
 	const url = link + token;
 	const replacements = {
 		username: username,
